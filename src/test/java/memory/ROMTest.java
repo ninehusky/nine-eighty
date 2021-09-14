@@ -9,13 +9,13 @@ import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ROMTest {
+class CartridgeTest {
     private static final String DEBUG_ROM_PATH = "src/test/resources/debug.rom";
-    ROM rom;
+    Cartridge cart;
 
     @BeforeEach
     void setUp() {
-        rom = new ROM(new File(DEBUG_ROM_PATH));
+        cart = new Cartridge(new File(DEBUG_ROM_PATH));
     }
 
     @Test
@@ -24,7 +24,7 @@ class ROMTest {
             InputStream stream = new FileInputStream(DEBUG_ROM_PATH);
             for (int i = 0; i < 5; i++) {
                 // Verify first five bytes match
-                assertEquals(stream.read(), rom.getByte(i));
+                assertEquals(stream.read(), cart.getByte(i));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,29 +34,29 @@ class ROMTest {
     @Test
     void getByteThrowsExceptionWithIncorrectAddress() {
         assertThrows(IllegalArgumentException.class, () -> {
-            rom.getByte(Integer.MAX_VALUE);
+            cart.getByte(Integer.MAX_VALUE);
         });
 
         assertThrows(IllegalArgumentException.class, () -> {
-            rom.getByte(-1);
+            cart.getByte(-1);
         });
     }
 
     @Test
     void setByteThrowsExceptionWithValidAddress() {
         assertThrows(UnsupportedOperationException.class, () -> {
-            rom.setByte(0, 3);
+            cart.setByte(0, 3);
         });
     }
 
     @Test
     void setByteThrowsExceptionWithInvalidAddress() {
         assertThrows(UnsupportedOperationException.class, () -> {
-            rom.setByte(Integer.MAX_VALUE, 3);
+            cart.setByte(Integer.MAX_VALUE, 3);
         });
 
         assertThrows(UnsupportedOperationException.class, () -> {
-            rom.setByte(-1, 3);
+            cart.setByte(-1, 3);
         });
     }
 
