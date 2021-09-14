@@ -10,7 +10,7 @@ public abstract class Memory {
 
     public void checkAddress(int address) {
         if (address < 0 || address > size) {
-            throw new IllegalArgumentException("Cannot access memory at index " + BitUtils.toHex(address));
+            throw new IllegalArgumentException("Cannot access memory at index " + BitUtils.hexWord(address));
         }
     }
 }
