@@ -1,5 +1,6 @@
-package memory;
+package memory.rom;
 
+import memory.rom.ROM;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,13 +10,13 @@ import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CartridgeTest {
-    private static final String DEBUG_ROM_PATH = "src/test/resources/debug.rom";
-    Cartridge cart;
+class ROMTest {
+    public static final String DEBUG_ROM_PATH = "src/test/resources/debug.rom";
+    ROM cart;
 
     @BeforeEach
     void setUp() {
-        cart = new Cartridge(new File(DEBUG_ROM_PATH));
+        cart = new ROM(5000, new File(DEBUG_ROM_PATH));
     }
 
     @Test
