@@ -11,8 +11,10 @@ import memory.MemoryBus;
 /**
  * Represents one variant of the MOV command.
  *
- * Moves data from one register to the other. Note that operations like MOV X, H should be executed using the
- * MovRegisterToMemory class.
+ * Moves data from one register to the other.
+ * Note that alternate MOV variants should be executed using different Mov classes.
+ *
+ * Flags set: None
  */
 public class MovRegisterToRegister implements Operation {
     private Register dst;
