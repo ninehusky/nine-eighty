@@ -1,6 +1,7 @@
-package cpu.operations;
+package cpu.operations.machinecontrol;
 
 import cpu.flags.Flags;
+import cpu.operations.Operation;
 import cpu.registers.ProgramCounter;
 import cpu.registers.Registers;
 import cpu.registers.StackPointer;

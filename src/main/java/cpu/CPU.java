@@ -1,12 +1,10 @@
 package cpu;
 
 import cpu.flags.Flags;
-import cpu.operations.NoOperation;
+import cpu.operations.datatransfer.*;
+import cpu.operations.machinecontrol.NoOperation;
 import cpu.operations.Operation;
 import cpu.operations.OperationMap;
-import cpu.operations.datatransfer.MovMemoryToRegister;
-import cpu.operations.datatransfer.MovRegisterToMemory;
-import cpu.operations.datatransfer.MovRegisterToRegister;
 import cpu.registers.ProgramCounter;
 import cpu.registers.Registers;
 import cpu.registers.StackPointer;
@@ -67,12 +65,24 @@ public class CPU {
 
             final Operation noOp = new NoOperation();
             addOperation(operationMap, "NOP", 0x00, noOp);
+            addOperation(operationMap, "LXI B, d16", 0x01, new LoadRegisterPairImmediate(regs.getB(), regs.getC()));
+            addOperation(operationMap, "STAX B", 0x02, new StoreAInRegisterPair(regs.getB(), regs.getC()));
+
             addOperation(operationMap, "NOP", 0x08, noOp);
             addOperation(operationMap, "NOP", 0x10, noOp);
+            addOperation(operationMap, "LXI D, d16", 0x11, new LoadRegisterPairImmediate(regs.getD(), regs.getE()));
+            addOperation(operationMap, "STAX D", 0x12, new StoreAInRegisterPair(regs.getD(), regs.getE()));
+
             addOperation(operationMap, "NOP", 0x18, noOp);
+
             addOperation(operationMap, "NOP", 0x20, noOp);
+            addOperation(operationMap, "LXI H, d16", 0x21, new LoadRegisterPairImmediate(regs.getH(), regs.getL()));
+
             addOperation(operationMap, "NOP", 0x28, noOp);
+
             addOperation(operationMap, "NOP", 0x30, noOp);
+            addOperation(operationMap, "LXI SP, d16", 0x31, new LoadStackPointerImmediate());
+
             addOperation(operationMap, "NOP", 0x38, noOp);
 
             addOperation(operationMap, "MOV B, B", 0x40, new MovRegisterToRegister(regs.getB(), regs.getB()));
@@ -135,8 +145,10 @@ public class CPU {
             addOperation(operationMap, "MOV M, E", 0x73, new MovMemoryToRegister(regs.getE()));
             addOperation(operationMap, "MOV M, H", 0x74, new MovMemoryToRegister(regs.getH()));
             addOperation(operationMap, "MOV M, L", 0x75, new MovMemoryToRegister(regs.getL()));
+
             // TODO: implement the HLT operation
             addOperation(operationMap, "HLT", 0x76, new NoOperation());
+
             addOperation(operationMap, "MOV M, A", 0x77, new MovMemoryToRegister(regs.getA()));
 
             addOperation(operationMap, "MOV A, B", 0x78, new MovRegisterToRegister(regs.getA(), regs.getB()));

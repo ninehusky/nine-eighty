@@ -35,6 +35,6 @@ public class MovRegisterToMemory implements Operation {
 
     @Override
     public String toString() {
-        return "MOV " + src + " M";
+        return "MOV " + src + ", M";
     }
 }

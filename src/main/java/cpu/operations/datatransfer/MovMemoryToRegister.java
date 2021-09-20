@@ -32,4 +32,9 @@ public class MovMemoryToRegister implements Operation {
         pc.increment();
         return 1;
     }
+
+    @Override
+    public String toString() {
+        return "MOV M, " + dest;
+    }
 }
