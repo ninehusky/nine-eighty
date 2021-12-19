@@ -27,7 +27,7 @@ public class RAM implements AddressSpace {
         buffer[address] = value;
     }
 
-    protected void checkAddress(int address) {
+    private void checkAddress(int address) {
         if (address >= buffer.length) {
             throw new IllegalArgumentException("Address " + Integer.toHexString(address) + " is out of bounds!");
         }
