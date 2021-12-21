@@ -26,7 +26,7 @@ public class Flags {
      * Turns the flag on.
      * @param f - the flag to be turned on
      */
-    public void setFlag(Flag f) {
+    public void set(Flag f) {
         value |= f.getMask();
     }
 
@@ -34,7 +34,7 @@ public class Flags {
      * Turns the flag off.
      * @param f - the flag to be turned off
      */
-    public void resetFlag(Flag f) {
+    public void reset(Flag f) {
         value &= (~f.getMask());
     }
 }

@@ -3,7 +3,7 @@ package cpu.registers;
 /**
  * Represents a 16-bit register pointing to some address in the 8080's address space.
  */
-public class Pointer {
+class Pointer {
     private int value;
 
     /**

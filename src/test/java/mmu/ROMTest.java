@@ -18,11 +18,11 @@ class ROMTest {
     void testConstructorPopulation() {
         byte[] buf = new byte[0x100];
         for (int i = 0; i < buf.length; i++) {
-            buf[i] = (byte)i;
+            buf[i] = (byte)(i & 0xFF);
         }
         ROM rom = new ROM(buf);
         for (int i = 0; i < buf.length; i++) {
-            assertEquals(buf[i], rom.read(i));
+            assertEquals(Integer.toHexString(buf[i] & 0xFF), Integer.toHexString(rom.read(i)));
         }
     }
 
@@ -35,11 +35,11 @@ class ROMTest {
         }
         ROM rom = new ROM(buf);
         for (int i = 0; i < buf.length; i++) {
-            assertEquals(buf[i], rom.read(i));
+            assertEquals(buf[i] & 0xFF, rom.read(i));
         }
 
         for (int i = 0; i < buf.length; i++) {
-            assertEquals(buf[i], rom.read(i));
+            assertEquals(buf[i] & 0xFF, rom.read(i));
         }
     }
 
@@ -56,26 +56,22 @@ class ROMTest {
         }
 
         for (int i = 0; i < buf.length; i++) {
-            assertEquals((byte)i, rom.read(i));
+            assertEquals(i & 0xFF, rom.read(i));
         }
     }
 
     @Test
     @DisplayName("ROM throws exception upon invalid read addresses")
     void testExceptionThrownUponInvalidReadAndWrite() {
-        byte[] buf = new byte[1]; // there is one byte of data here
+        byte[] buf = new byte[1];
         int illegalAddress = 0xF;
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ROM(buf).read(illegalAddress);
-        });
+        assertThrows(IllegalArgumentException.class, () -> new ROM(buf).read(illegalAddress));
     }
 
     @Test
     @DisplayName("ROM throws exception on write operations")
     void testExceptionThrownUponWrite() {
         byte[] buf = new byte[1];
-        assertThrows(UnsupportedOperationException.class, () -> {
-            new ROM(buf).write(0, 0);
-        });
+        assertThrows(UnsupportedOperationException.class, () -> new ROM(buf).write(0, 0));
     }
 }

@@ -11,7 +11,7 @@ public class ROM extends RAM {
     public ROM(byte[] buffer) {
         super(buffer.length);
         for (int i = 0; i < buffer.length; i++) {
-            this.buffer[i] = buffer[i];
+            this.buffer[i] = (int)buffer[i] & 0xFF;
         }
     }
 
