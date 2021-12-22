@@ -1,36 +1,40 @@
 package cpu.flags;
 
+/**
+ * Represents the state of all flags in the 8080.
+ *
+ * There are five flags of concern in the 8080:
+ * - carry flag, set to carry out of bit 7 in arithmetic operations
+ * - parity flag, set if number of bits in a result is even, odd otherwise
+ * - auxiliary carry, set to carry out of bit 3 in a result (hardly used)
+ * - zero flag, set if result is 0, reset otherwise
+ * - sign flag, set of bit 7 of result
+ */
 public class Flags {
-    private static final int WORD_MASK = 0xFFFFFFF;
     private int value;
 
-    public int getValue() {
-        return value;
+    /**
+     * Returns true if the flag with the given mask is set.
+     * @param f - flag whose status is to be tested
+     * @return true if the flag with the given mask is set
+     */
+    public boolean isSet(Flag f) {
+        return (value &= f.getMask()) != 0;
     }
 
     /**
-     *
-     * @param flag the flag with which to assess
-     * @return true if the flag is set, false otherwise
+     * Turns the flag on.
+     * @param f - the flag to be turned on
      */
-    public boolean isSet(Flag flag) {
-        int temp = value & flag.getMask();
-        return temp != 0;
+    public void set(Flag f) {
+        value |= f.getMask();
     }
 
     /**
-     * Turns on the given flag.
-     * @param flag
+     * Turns the flag off.
+     * @param f - the flag to be turned off
      */
-    public void setFlag(Flag flag) {
-        value |= flag.getMask();
-    }
-
-    /**
-     * Turns off the given flag.
-     * @param flag
-     */
-    public void resetFlag(Flag flag) {
-        value &= (~flag.getMask());
+    public void reset(Flag f) {
+        value &= (~f.getMask());
     }
 }

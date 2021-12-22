@@ -1,11 +1,9 @@
 # nine-eighty
-An Intel 8080 emulator in Java!
+An Intel 8080 interpreter in Java!
 
-Right now, the plan is to implement the 8080's instruction set. Unit tests and interactive debuggers are also likely!
-
-I'm also thinking of being really modular with this; I want to reuse several interfaces/modules in a future emulator.
-
-Another end goal is also to have a pretty nifty gui to play Space Invaders.
+The Intel 8080 is famous for powering famous arcade machines such as
+[Space Invaders](https://en.wikipedia.org/wiki/Space_Invaders).
 
 ## Special Thanks
-Thanks to Alexandria for believing in me ❤️
+Thanks to the folks at the emulation development subreddit for being helpful,
+and to Alexandria for being the best.

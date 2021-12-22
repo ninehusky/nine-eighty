@@ -1,90 +1,148 @@
 package cpu.registers;
 
-import utils.BitUtils;
-
+/**
+ * Represents the seven 8-bit registers that accompany the 8080, alongside the CPU's
+ * 16-bit stack pointer and program counter.
+ */
 public class Registers {
-    private static final int WORD_MASK = 0xFFFF;
 
-    private final Register a;  // the accumulator!
-    private final Register b;
-    private final Register c;
-    private final Register d;
-    private final Register e;
-    private final Register h;
-    private final Register l;
+    private int a;
+    private int b;
+    private int c;
+    private int d;
+    private int e;
+    private int h;
+    private int l;
+
+    private final Pointer sp;
+    private final Pointer pc;
 
     public Registers() {
-        a = new Register("A");
-        b = new Register("B");
-        c = new Register("C");
-        d = new Register("D");
-        e = new Register("E");
-        h = new Register("H");
-        l = new Register("L");
+        sp = new Pointer();
+        pc = new Pointer();
     }
 
-    public Register getA() {
-        return a;
+    public Pointer getStackPointer() {
+        return sp;
     }
 
-    public Register getB() {
-        return b;
+    public Pointer getProgramCounter() {
+        return pc;
     }
 
-    public Register getC() {
-        return c;
+    /**
+     * Increments the program counter by n.
+     * @param n - the amount to increment
+     * @throws IllegalArgumentException if incrementing the program counter by the given amount results in overflow.
+     */
+    public void incrementProgramCounter(int n) {
+        pc.write(pc.read() + n);
     }
 
-    public Register getD() {
-        return d;
+    /**
+     * Increments the program counter by 1.
+     * Equivalent to <code>incrementProgramCounter(1)code>.
+     */
+    public void incrementProgramCounter() {
+        this.incrementProgramCounter(1);
     }
 
-    public Register getE() {
-        return e;
+    /**
+     * Returns the 8-bit value to the given register.
+     * @param r - the register whose value is returned
+     * @return the value of the 8-bit register
+     */
+    public int read(Register r) {
+        return switch (r) {
+            case A -> a;
+            case B -> b;
+            case C -> c;
+            case D -> d;
+            case E -> e;
+            case H -> h;
+            default -> l;
+        };
     }
 
-    public Register getH() {
-        return h;
-    }
-
-    public Register getL() {
-        return l;
-    }
-
-    public int getBC() {
-        return getPair(b, c);
-    }
-
-    public void setBC(int value) {
-        setPair(b, c, value);
-    }
-
-    public int getDE() {
-        return getPair(d, e);
-    }
-
-    public void setDE(int value) {
-        setPair(d, e, value);
-    }
-
-    public int getHL() {
-        return getPair(h, l);
-    }
-
-    public void setHL(int value) {
-        setPair(h, l, value);
-    }
-
-    private int getPair(Register low, Register high) {
-        int value = ((low.getValue() << 8) | high.getValue());
-        assert((value &= WORD_MASK) == value);
+    /**
+     * Returns the 16-bit value corresponding to the given register pair.
+     * For example, if register B stores 0xAB, and register C stores 0xD1,
+     * then <code>readPair(RegisterPair.BC)</code> will return 0xABD1.
+     * @param pair - the pair to read
+     * @return - the value corresponding to that pair
+     */
+    public int readPair(RegisterPair pair) {
+        int highBits;  // most significant bits of value
+        int lowBits;   // least significant bits of value
+        switch (pair) {
+            case BC -> {
+                highBits = b;
+                lowBits = c;
+            }
+            case DE -> {
+                highBits = d;
+                lowBits = e;
+            }
+            default -> {
+                highBits = h;
+                lowBits = l;
+            }
+        }
+        int value = (highBits << 8) | lowBits;
+        // ensure that we didn't accidentally create an impossible value
+        assert((value & 0xFFFF) == value);
         return value;
     }
 
-    private void setPair(Register low, Register high, int value) {
-        int highValue = (value & 0xFF00) >> 8;
-        int lowValue = value & 0xFF;
-        high.setValue(highValue);
-        low.setValue(lowValue);
+    /**
+     * Sets the given register pair equal to the given value.
+     * For example, <code>writePair(RegisterPair.BC, 0xABCD)</code> will set
+     * B equal to the value's most significant bits, i.e., 0xAB, and C equal to
+     * the value's least significant bits, 0xCD.
+     * @param pair - the pair to change
+     * @param value - the value to put in the pair
+     */
+    public void writePair(RegisterPair pair, int value) {
+        if ((value & 0xFFFF) != value) {
+            throw new IllegalArgumentException("Cannot store value " + Integer.toHexString(value) +
+                                               " in register pair!");
+        }
+        int highBits = (value >>> 8);  // most significant bits of value
+        int lowBits = (value & 0xFF);   // least significant bits of value
+        switch (pair) {
+            case BC -> {
+                b = highBits;
+                c = lowBits;
+            }
+            case DE -> {
+                d = highBits;
+                e = lowBits;
+            }
+            default -> {
+                h = highBits;
+                l = lowBits;
+            }
+        }
+    }
+
+    /**
+     * Writes the given value to the given 8-bit register.
+     * @throws IllegalArgumentException if val > 255 (i.e., higher than 8-bit value)
+     * @param r - the register whose value ot overwrite
+     * @param val - the value to be written
+     */
+    public void write(Register r, int val) {
+        if ((val & ~0xFF) != 0) {
+            throw new IllegalArgumentException("Cannot write value " + Integer.toHexString(val) + " to register!");
+        }
+        switch (r) {
+            case A -> a = val;
+            case B -> b = val;
+            case C -> c = val;
+            case D -> d = val;
+            case E -> e = val;
+            case H -> h = val;
+            default -> l = val;
+        }
     }
 }
