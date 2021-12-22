@@ -9,9 +9,9 @@ public class MemoryBus implements AddressSpace {
     public static final int RAM_START_ADDRESS  = 0x2000;
     public static final int VRAM_START_ADDRESS = 0x2400;
 
-    private static final int ROM_SIZE_IN_BYTES = 8192;
-    private static final int RAM_SIZE_IN_BYTES = 1024;
-    private static final int VRAM_SIZE_IN_BYTES = 7168;
+    public static final int ROM_SIZE_IN_BYTES = 8192;
+    public static final int RAM_SIZE_IN_BYTES = 1024;
+    public static final int VRAM_SIZE_IN_BYTES = 7168;
 
     private static final int MAX_ADDRESS = 0x3FFF;
 
@@ -19,8 +19,11 @@ public class MemoryBus implements AddressSpace {
     private final RAM ram;
     private final RAM vram;
 
+    /**
+     * Constructs a MemoryBus.
+     * @param romBuffer - the data corresponding to the ROM
+     */
     public MemoryBus(byte[] romBuffer) {
-        assert(romBuffer.length == ROM_SIZE_IN_BYTES);
         this.rom = new ROM(romBuffer);
         this.ram = new RAM(RAM_SIZE_IN_BYTES);
         this.vram = new RAM(VRAM_SIZE_IN_BYTES);

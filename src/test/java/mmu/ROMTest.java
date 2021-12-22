@@ -64,7 +64,7 @@ class ROMTest {
     @DisplayName("ROM throws exception upon invalid read addresses")
     void testExceptionThrownUponInvalidReadAndWrite() {
         byte[] buf = new byte[1];
-        int illegalAddress = 0xF;
+        int illegalAddress = MemoryBus.ROM_SIZE_IN_BYTES + 1;
         assertThrows(IllegalArgumentException.class, () -> new ROM(buf).read(illegalAddress));
     }
 

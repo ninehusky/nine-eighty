@@ -5,24 +5,6 @@ package cpu.registers;
  * 16-bit stack pointer and program counter.
  */
 public class Registers {
-    public enum Register {
-        A,
-        B,
-        C,
-        D,
-        E,
-        H,
-        L
-    };
-
-    /**
-     * Represents the pairs that are often accessed in 8080 instructions.
-     */
-    public enum RegisterPair {
-        BC,
-        DE,
-        HL
-    };
 
     private int a;
     private int b;
@@ -32,8 +14,8 @@ public class Registers {
     private int h;
     private int l;
 
-    private Pointer sp;
-    private Pointer pc;
+    private final Pointer sp;
+    private final Pointer pc;
 
     public Registers() {
         sp = new Pointer();
@@ -49,27 +31,37 @@ public class Registers {
     }
 
     /**
+     * Increments the program counter by n.
+     * @param n - the amount to increment
+     * @throws IllegalArgumentException if incrementing the program counter by the given amount results in overflow.
+     */
+    public void incrementProgramCounter(int n) {
+        pc.write(pc.read() + n);
+    }
+
+    /**
+     * Increments the program counter by 1.
+     * Equivalent to <code>incrementProgramCounter(1)code>.
+     */
+    public void incrementProgramCounter() {
+        this.incrementProgramCounter(1);
+    }
+
+    /**
      * Returns the 8-bit value to the given register.
      * @param r - the register whose value is returned
      * @return the value of the 8-bit register
      */
     public int read(Register r) {
-        switch (r) {
-            case A:
-                return a;
-            case B:
-                return b;
-            case C:
-                return c;
-            case D:
-                return d;
-            case E:
-                return e;
-            case H:
-                return h;
-            default:
-                return l;
-        }
+        return switch (r) {
+            case A -> a;
+            case B -> b;
+            case C -> c;
+            case D -> d;
+            case E -> e;
+            case H -> h;
+            default -> l;
+        };
     }
 
     /**
@@ -82,19 +74,19 @@ public class Registers {
     public int readPair(RegisterPair pair) {
         int highBits;  // most significant bits of value
         int lowBits;   // least significant bits of value
-        switch(pair) {
-            case BC:
+        switch (pair) {
+            case BC -> {
                 highBits = b;
                 lowBits = c;
-                break;
-            case DE:
+            }
+            case DE -> {
                 highBits = d;
                 lowBits = e;
-                break;
-            default:
+            }
+            default -> {
                 highBits = h;
                 lowBits = l;
-                break;
+            }
         }
         int value = (highBits << 8) | lowBits;
         // ensure that we didn't accidentally create an impossible value
@@ -117,20 +109,19 @@ public class Registers {
         }
         int highBits = (value >>> 8);  // most significant bits of value
         int lowBits = (value & 0xFF);   // least significant bits of value
-        switch(pair) {
-            case BC:
+        switch (pair) {
+            case BC -> {
                 b = highBits;
                 c = lowBits;
-                break;
-            case DE:
+            }
+            case DE -> {
                 d = highBits;
-                System.out.println(Integer.toHexString(d));
                 e = lowBits;
-                break;
-            default:
+            }
+            default -> {
                 h = highBits;
                 l = lowBits;
-                break;
+            }
         }
     }
 
@@ -145,27 +136,13 @@ public class Registers {
             throw new IllegalArgumentException("Cannot write value " + Integer.toHexString(val) + " to register!");
         }
         switch (r) {
-            case A:
-                a = val;
-                break;
-            case B:
-                b = val;
-                break;
-            case C:
-                c = val;
-                break;
-            case D:
-                d = val;
-                break;
-            case E:
-                e = val;
-                break;
-            case H:
-                h = val;
-                break;
-            default:
-                l = val;
-                break;
+            case A -> a = val;
+            case B -> b = val;
+            case C -> c = val;
+            case D -> d = val;
+            case E -> e = val;
+            case H -> h = val;
+            default -> l = val;
         }
     }
 }

@@ -3,7 +3,7 @@ package cpu.registers;
 /**
  * Represents a 16-bit register pointing to some address in the 8080's address space.
  */
-class Pointer {
+public class Pointer {
     private int value;
 
     /**
@@ -15,7 +15,6 @@ class Pointer {
         if ((value & 0xFFFF) != value) {
             throw new IllegalArgumentException("Cannot write value " + Integer.toHexString(value) + " to pointer.");
         }
-        assert((value & 0xFFFF) == value);
         this.value = value;
     }
 

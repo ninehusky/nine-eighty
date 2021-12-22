@@ -10,11 +10,11 @@ class RegistersTest {
     @DisplayName("Registers can be written")
     void testRegistersWrite() {
         Registers regs = new Registers();
-        for (Registers.Register r : Registers.Register.values()) {
+        for (Register r : Register.values()) {
             regs.write(r, 0xFF);
         }
 
-        for (Registers.Register r : Registers.Register.values()) {
+        for (Register r : Register.values()) {
             assertEquals(0xFF, regs.read(r));
         }
     }
@@ -23,22 +23,22 @@ class RegistersTest {
     @DisplayName("Register Pairs can be written")
     void testRegisterPairWrite() {
         Registers regs = new Registers();
-        for (Registers.RegisterPair pair : Registers.RegisterPair.values()) {
+        for (RegisterPair pair : RegisterPair.values()) {
             regs.writePair(pair, 0xABD1);
             assertEquals(0xABD1, regs.readPair(pair));
             switch (pair) {
-                case BC:
-                    assertEquals(0xAB, regs.read(Registers.Register.B));
-                    assertEquals(0xD1, regs.read(Registers.Register.C));
-                    break;
-                case DE:
-                    assertEquals(0xAB, regs.read(Registers.Register.D));
-                    assertEquals(0xD1, regs.read(Registers.Register.E));
-                    break;
-                default:
-                    assertEquals(0xAB, regs.read(Registers.Register.H));
-                    assertEquals(0xD1, regs.read(Registers.Register.L));
-                    break;
+                case BC -> {
+                    assertEquals(0xAB, regs.read(Register.B));
+                    assertEquals(0xD1, regs.read(Register.C));
+                }
+                case DE -> {
+                    assertEquals(0xAB, regs.read(Register.D));
+                    assertEquals(0xD1, regs.read(Register.E));
+                }
+                default -> {
+                    assertEquals(0xAB, regs.read(Register.H));
+                    assertEquals(0xD1, regs.read(Register.L));
+                }
             }
         }
         // TODO(acheung8): test other registers unaffected?
@@ -49,7 +49,7 @@ class RegistersTest {
     void testRegisterPairWriteException() {
         Registers regs = new Registers();
         int illegalValue = 0xFFFF + 1;
-        for (Registers.RegisterPair pair : Registers.RegisterPair.values()) {
+        for (RegisterPair pair : RegisterPair.values()) {
             assertThrows(IllegalArgumentException.class, () -> regs.writePair(pair, illegalValue));
         }
     }
@@ -58,7 +58,7 @@ class RegistersTest {
     @DisplayName("Registers correctly throw exception upon overflow")
     void testRegistersExceptionUponOverflow() {
         Registers regs = new Registers();
-        for (Registers.Register r : Registers.Register.values()) {
+        for (Register r : Register.values()) {
             assertThrows(IllegalArgumentException.class, () -> regs.write(r, 0x100));
         }
     }
@@ -106,15 +106,15 @@ class RegistersTest {
     }
 
     @Test
-    @DisplayName("Registers correctly are written to")
+    @DisplayName("Registers correctly write")
     void testRegisterReadWrite() {
         int value = 0xAB;
         Registers regs = new Registers();
-        for (Registers.Register r : Registers.Register.values()) {
+        for (Register r : Register.values()) {
             regs.write(r, value);
         }
 
-        for (Registers.Register r : Registers.Register.values()) {
+        for (Register r : Register.values()) {
             assertEquals(regs.read(r), value);
         }
     }
