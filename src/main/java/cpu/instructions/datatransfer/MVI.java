@@ -1,11 +1,8 @@
 package cpu.instructions.datatransfer;
 
-import cpu.flags.Flags;
 import cpu.instructions.Instruction;
 import cpu.registers.Register;
 import cpu.registers.RegisterPair;
-import cpu.registers.Registers;
-import mmu.MemoryBus;
 
 public class MVI {
     public static Instruction loadRegisterWithImmediate(Register reg) {

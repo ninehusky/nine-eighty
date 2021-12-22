@@ -1,10 +1,11 @@
 package cpu.instructions;
 
 import cpu.instructions.datatransfer.LXI;
+import cpu.instructions.datatransfer.MVI;
 import cpu.instructions.datatransfer.STAX;
 import cpu.instructions.machinecontrol.NOP;
+import cpu.registers.Register;
 import cpu.registers.RegisterPair;
-import cpu.registers.Registers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,22 +31,36 @@ public class OperationMap {
         addCommand(0x01, "LXI B, d16", LXI.loadWordToPair(RegisterPair.BC));
         addCommand(0x02, "STAX B", STAX.StoreAccumulatorInMemory(RegisterPair.BC));
 
+        addCommand(0x06, "MVI B, d8", MVI.loadRegisterWithImmediate(Register.B));
+
         addCommand(0x08, "NOP", NOP.NoOperation());
+
+        addCommand(0x0E, "MVI C, d8", MVI.loadRegisterWithImmediate(Register.C));
 
         addCommand(0x10, "NOP", NOP.NoOperation());
         addCommand(0x11, "LXI D, d16", LXI.loadWordToPair(RegisterPair.DE));
         addCommand(0x12, "STAX D", STAX.StoreAccumulatorInMemory(RegisterPair.DE));
 
+        addCommand(0x16, "MVI D, d8", MVI.loadRegisterWithImmediate(Register.D));
+
         addCommand(0x18, "NOP", NOP.NoOperation());
+
+        addCommand(0x1E, "MVI E, d8", MVI.loadRegisterWithImmediate(Register.E));
 
         addCommand(0x20, "NOP", NOP.NoOperation());
         addCommand(0x21, "LXI H, d16", LXI.loadWordToPair(RegisterPair.HL));
+
+        addCommand(0x26, "MVI H, d8", MVI.loadRegisterWithImmediate(Register.H));
 
         addCommand(0x28, "NOP", NOP.NoOperation());
 
         addCommand(0x30, "NOP", NOP.NoOperation());
         addCommand(0x31, "LXI SP, d16", LXI.loadWordToStackPointer());
 
+        addCommand(0x36, "MVI M, d8", MVI.loadMemoryWithImmediate());
+
         addCommand(0x38, "NOP", NOP.NoOperation());
+
+        addCommand(0x3E, "MVI A, d8", MVI.loadRegisterWithImmediate(Register.A));
     }
 }

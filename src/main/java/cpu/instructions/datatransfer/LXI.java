@@ -1,10 +1,7 @@
 package cpu.instructions.datatransfer;
 
-import cpu.flags.Flags;
 import cpu.instructions.Instruction;
 import cpu.registers.RegisterPair;
-import cpu.registers.Registers;
-import mmu.MemoryBus;
 
 /**
  * Loads register pair/stack pointer with a 16-bit immediate.
