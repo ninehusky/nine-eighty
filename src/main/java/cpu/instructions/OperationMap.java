@@ -24,7 +24,6 @@ public class OperationMap {
     static {
         operationMap = new HashMap<>();
 
-        // let's test some no ops
         addCommand(0x00, "NOP", NOP.NoOperation());
         addCommand(0x01, "LXI B, d16", LXI.loadWordToPair(RegisterPair.BC));
         addCommand(0x02, "STAX B", STAX.StoreAccumulatorInMemory(RegisterPair.BC));
@@ -59,10 +58,13 @@ public class OperationMap {
 
         addCommand(0x30, "NOP", NOP.NoOperation());
         addCommand(0x31, "LXI SP, d16", LXI.loadWordToStackPointer());
+        addCommand(0x32, "STA, a16", STA.storeAccumulatorImmediate());
 
         addCommand(0x36, "MVI M, d8", MVI.loadMemoryWithImmediate());
 
         addCommand(0x38, "NOP", NOP.NoOperation());
+
+        addCommand(0x3A, "LDA a16", LDA.loadAccumulatorImmediate());
 
         addCommand(0x3E, "MVI A, d8", MVI.loadRegisterWithImmediate(Register.A));
     }
