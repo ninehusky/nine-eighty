@@ -1,8 +1,6 @@
 package cpu.instructions;
 
-import cpu.instructions.datatransfer.LXI;
-import cpu.instructions.datatransfer.MVI;
-import cpu.instructions.datatransfer.STAX;
+import cpu.instructions.datatransfer.*;
 import cpu.instructions.machinecontrol.NOP;
 import cpu.registers.Register;
 import cpu.registers.RegisterPair;
@@ -35,6 +33,8 @@ public class OperationMap {
 
         addCommand(0x08, "NOP", NOP.NoOperation());
 
+        addCommand(0x0A, "LDAX B", LDAX.loadAccumulator(RegisterPair.BC));
+
         addCommand(0x0E, "MVI C, d8", MVI.loadRegisterWithImmediate(Register.C));
 
         addCommand(0x10, "NOP", NOP.NoOperation());
@@ -45,10 +45,13 @@ public class OperationMap {
 
         addCommand(0x18, "NOP", NOP.NoOperation());
 
+        addCommand(0x1A, "LDAX D", LDAX.loadAccumulator(RegisterPair.DE));
+
         addCommand(0x1E, "MVI E, d8", MVI.loadRegisterWithImmediate(Register.E));
 
         addCommand(0x20, "NOP", NOP.NoOperation());
         addCommand(0x21, "LXI H, d16", LXI.loadWordToPair(RegisterPair.HL));
+        addCommand(0x22, "SHLD a16", SHLD.storeHL());
 
         addCommand(0x26, "MVI H, d8", MVI.loadRegisterWithImmediate(Register.H));
 
