@@ -6,4 +6,4 @@ The Intel 8080 is famous for powering famous arcade machines such as
 
 ## Special Thanks
 Thanks to the folks at the emulation development subreddit for being helpful,
-and to Alexandria for being the best.
+and to Alexandria for being super-duper! ❤️
