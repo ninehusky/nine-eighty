@@ -67,5 +67,7 @@ public class OperationMap {
         addCommand(0x3A, "LDA a16", LDA.loadAccumulatorImmediate());
 
         addCommand(0x3E, "MVI A, d8", MVI.loadRegisterWithImmediate(Register.A));
+
+        addCommand(0xEB, "XCHG", XCHG.exchangeData());
     }
 }
