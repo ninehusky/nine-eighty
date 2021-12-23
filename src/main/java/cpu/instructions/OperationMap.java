@@ -56,6 +56,8 @@ public class OperationMap {
 
         addCommand(0x28, "NOP", NOP.NoOperation());
 
+        addCommand(0x2A, "LHLD a16", LHLD.loadHLImmediate());
+
         addCommand(0x30, "NOP", NOP.NoOperation());
         addCommand(0x31, "LXI SP, d16", LXI.loadWordToStackPointer());
         addCommand(0x32, "STA, a16", STA.storeAccumulatorImmediate());
