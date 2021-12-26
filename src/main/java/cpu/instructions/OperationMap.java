@@ -2,6 +2,7 @@ package cpu.instructions;
 
 import cpu.instructions.datatransfer.*;
 import cpu.instructions.machinecontrol.NOP;
+import cpu.instructions.machinecontrol.POP;
 import cpu.registers.Register;
 import cpu.registers.RegisterPair;
 
@@ -144,8 +145,14 @@ public class OperationMap {
         addCommand(0x8E, "MOV A, M", MOV.movMemoryToRegister(Register.A));
         addCommand(0x8F, "MOV A, A", MOV.movRegisterToRegister(Register.A, Register.A));
 
+        addCommand(0xC1, "POP B", POP.popDataToRegisterPair(RegisterPair.BC));
 
+        addCommand(0xD1, "POP D", POP.popDataToRegisterPair(RegisterPair.DE));
+
+        addCommand(0xE1, "POP B", POP.popDataToRegisterPair(RegisterPair.HL));
 
         addCommand(0xEB, "XCHG", XCHG.exchangeData());
+
+        addCommand(0xF1, "POP PSW", POP.popDataToFlags());
     }
 }

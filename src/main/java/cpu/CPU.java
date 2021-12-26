@@ -49,4 +49,12 @@ public class CPU {
         }
         current.execute(regs, flags, bus);
     }
+
+    /**
+     * Resets the CPU to the Space Invaders' original settings.
+     */
+    public void reset() {
+        // TODO: i should do this.
+        throw new UnsupportedOperationException();
+    }
 }

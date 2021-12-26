@@ -19,7 +19,7 @@ public class Flags {
      * @return true if the flag with the given mask is set
      */
     public boolean isSet(Flag f) {
-        return (value &= f.getMask()) != 0;
+        return (value & f.getMask()) != 0;
     }
 
     /**
@@ -29,6 +29,20 @@ public class Flags {
     public void set(Flag f) {
         value |= f.getMask();
     }
+
+    /**
+     * Turns on the flag based on the mask.
+     * @param mask - the mask corresponding to the state of each of the five bits
+     * @throws IllegalArgumentException if the given mask is unable to be represented by the 8080,
+     * i.e., it is over 8 bits
+     */
+    public void setWithMask(int mask) {
+        if (mask != (mask & 0xFF)) {
+            throw new IllegalArgumentException();
+        }
+        this.value = mask;
+    }
+
 
     /**
      * Turns the flag off.
