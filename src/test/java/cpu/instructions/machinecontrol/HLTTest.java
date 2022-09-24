@@ -13,19 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HLTTest {
     @Test
-    @DisplayName("HLT correctly shifts CPU State")
+    @DisplayName("HLT correctly shifts CPUState")
     void testCPUStateShift() {
         Registers regs = new Registers();
         Flags flags = Mockito.mock(Flags.class);
         MemoryBus bus = Mockito.mock(MemoryBus.class);
 
-        CPU cpu = new CPU(regs, flags, bus);
+        assertEquals(CPUState.RUNNING, regs.getCPUState());
 
-        assertEquals(CPUState.RUNNING, cpu.getState());
+        HLT.haltInstruction().execute(regs, flags, bus);
 
-        HLT.haltInstruction(cpu).execute(regs, flags, bus);
-
-        assertEquals(CPUState.STOPPED, cpu.getState());
+        assertEquals(CPUState.HALTED, regs.getCPUState());
     }
 
     @Test
@@ -38,10 +36,9 @@ public class HLTTest {
         CPU cpu = new CPU(regs, flags, bus);
 
         int before = regs.getProgramCounter().read();
-        assertEquals(1, HLT.haltInstruction(cpu).execute(regs, flags, bus));
+        assertEquals(1, HLT.haltInstruction().execute(regs, flags, bus));
         int after = regs.getProgramCounter().read();
 
         assertEquals(1, after - before);
-
     }
 }

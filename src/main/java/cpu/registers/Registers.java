@@ -1,8 +1,10 @@
 package cpu.registers;
 
+import cpu.CPUState;
+
 /**
  * Represents the seven 8-bit registers that accompany the 8080, alongside the CPU's
- * 16-bit stack pointer and program counter.
+ * 16-bit stack pointer and program counter. Also manages the state of the 8080.
  */
 public class Registers {
 
@@ -14,12 +16,31 @@ public class Registers {
     private int h;
     private int l;
 
+    private CPUState state;
+
     private final Pointer sp;
     private final Pointer pc;
 
     public Registers() {
         sp = new Pointer();
         pc = new Pointer();
+        state = CPUState.RUNNING;
+    }
+
+    /**
+     * Returns the CPU's state with the given state.
+     * @return the state of the CPU
+     */
+    public CPUState getCPUState() {
+        return this.state;
+    }
+
+    /**
+     * Replaces the CPU's state with the given state.
+     * @param state - the state to assign to the CPU
+     */
+    public void setCPUState(CPUState state) {
+        this.state = state;
     }
 
     public Pointer getStackPointer() {

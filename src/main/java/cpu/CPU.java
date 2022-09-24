@@ -18,8 +18,6 @@ public class CPU {
 
     private final Map<Integer, Operation> operationMap;
 
-    private CPUState state;
-
     // TODO: switch this bad boy off
     private static final boolean DEBUG_MODE = true;
 
@@ -27,7 +25,6 @@ public class CPU {
         this.regs = regs;
         this.flags = flags;
         this.bus = bus;
-        this.state = CPUState.RUNNING;
         operationMap = OperationMap.operationMap;
     }
 
@@ -52,22 +49,6 @@ public class CPU {
             System.out.println("Operation: " + current);
         }
         current.execute(regs, flags, bus);
-    }
-
-    /**
-     * Returns the CPU's state with the given state.
-     * @return the state of the CPU
-     */
-    public CPUState getState() {
-        return this.state;
-    }
-
-    /**
-     * Replaces the CPU's state with the given state.
-     * @param state - the state to assign to the CPU
-     */
-    public void setState(CPUState state) {
-        this.state = state;
     }
 
     /**

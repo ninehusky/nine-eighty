@@ -1,6 +1,7 @@
 package cpu;
 
 public enum CPUState {
-    STOPPED,
+    HALTED,
     RUNNING
 }
+

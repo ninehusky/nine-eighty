@@ -1,6 +1,7 @@
 package cpu.instructions;
 
 import cpu.instructions.datatransfer.*;
+import cpu.instructions.machinecontrol.HLT;
 import cpu.instructions.machinecontrol.NOP;
 import cpu.instructions.machinecontrol.POP;
 import cpu.registers.Register;
@@ -132,7 +133,7 @@ public class OperationMap {
         addCommand(0x74, "MOV M, H", MOV.movRegisterToMemory(Register.H));
         addCommand(0x75, "MOV M, L", MOV.movRegisterToMemory(Register.L));
 
-        // HALT at 0x76
+        addCommand(0x76, "HLT", HLT.haltInstruction());
 
         addCommand(0x77, "MOV M, A", MOV.movRegisterToMemory(Register.A));
 
