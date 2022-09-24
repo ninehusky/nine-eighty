@@ -17,7 +17,7 @@ class NOPTest {
         Flags flags = Mockito.mock(Flags.class);
         MemoryBus bus = Mockito.mock(MemoryBus.class);
 
-        assertEquals(1, NOP.NoOperation().execute(regs, flags, bus));
+        assertEquals(1, NOP.noOperation().execute(regs, flags, bus));
     }
 
     @Test
@@ -28,7 +28,7 @@ class NOPTest {
         MemoryBus bus = Mockito.mock(MemoryBus.class);
 
         int before = regs.getProgramCounter().read();
-        NOP.NoOperation().execute(regs, flags, bus);
+        NOP.noOperation().execute(regs, flags, bus);
         int after = regs.getProgramCounter().read();
 
         assertEquals(1, after - before);

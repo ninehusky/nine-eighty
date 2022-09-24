@@ -25,47 +25,47 @@ public class OperationMap {
     static {
         operationMap = new HashMap<>();
 
-        addCommand(0x00, "NOP", NOP.NoOperation());
+        addCommand(0x00, "NOP", NOP.noOperation());
         addCommand(0x01, "LXI B, d16", LXI.loadWordToPair(RegisterPair.BC));
         addCommand(0x02, "STAX B", STAX.StoreAccumulatorInMemory(RegisterPair.BC));
 
         addCommand(0x06, "MVI B, d8", MVI.loadRegisterWithImmediate(Register.B));
 
-        addCommand(0x08, "NOP", NOP.NoOperation());
+        addCommand(0x08, "NOP", NOP.noOperation());
 
         addCommand(0x0A, "LDAX B", LDAX.loadAccumulator(RegisterPair.BC));
 
         addCommand(0x0E, "MVI C, d8", MVI.loadRegisterWithImmediate(Register.C));
 
-        addCommand(0x10, "NOP", NOP.NoOperation());
+        addCommand(0x10, "NOP", NOP.noOperation());
         addCommand(0x11, "LXI D, d16", LXI.loadWordToPair(RegisterPair.DE));
         addCommand(0x12, "STAX D", STAX.StoreAccumulatorInMemory(RegisterPair.DE));
 
         addCommand(0x16, "MVI D, d8", MVI.loadRegisterWithImmediate(Register.D));
 
-        addCommand(0x18, "NOP", NOP.NoOperation());
+        addCommand(0x18, "NOP", NOP.noOperation());
 
         addCommand(0x1A, "LDAX D", LDAX.loadAccumulator(RegisterPair.DE));
 
         addCommand(0x1E, "MVI E, d8", MVI.loadRegisterWithImmediate(Register.E));
 
-        addCommand(0x20, "NOP", NOP.NoOperation());
+        addCommand(0x20, "NOP", NOP.noOperation());
         addCommand(0x21, "LXI H, d16", LXI.loadWordToPair(RegisterPair.HL));
         addCommand(0x22, "SHLD a16", SHLD.storeHL());
 
         addCommand(0x26, "MVI H, d8", MVI.loadRegisterWithImmediate(Register.H));
 
-        addCommand(0x28, "NOP", NOP.NoOperation());
+        addCommand(0x28, "NOP", NOP.noOperation());
 
         addCommand(0x2A, "LHLD a16", LHLD.loadHLImmediate());
 
-        addCommand(0x30, "NOP", NOP.NoOperation());
+        addCommand(0x30, "NOP", NOP.noOperation());
         addCommand(0x31, "LXI SP, d16", LXI.loadWordToStackPointer());
         addCommand(0x32, "STA, a16", STA.storeAccumulatorImmediate());
 
         addCommand(0x36, "MVI M, d8", MVI.loadMemoryWithImmediate());
 
-        addCommand(0x38, "NOP", NOP.NoOperation());
+        addCommand(0x38, "NOP", NOP.noOperation());
 
         addCommand(0x3A, "LDA a16", LDA.loadAccumulatorImmediate());
 
