@@ -14,6 +14,17 @@ public class Flags {
     private int value;
 
     /**
+     * Returns the integer representation of the Flags.
+     * Flags follow this representation:
+     * SZ0A0P1C
+     * @param flags - the flags to check for
+     * @return the integer representation
+     */
+    public static int asInt(Flags flags) {
+        return flags.value & 0xFF;
+    }
+
+    /**
      * Returns true if the flag with the given mask is set.
      * @param f - flag whose status is to be tested
      * @return true if the flag with the given mask is set
@@ -40,9 +51,8 @@ public class Flags {
         if (mask != (mask & 0xFF)) {
             throw new IllegalArgumentException();
         }
-        this.value = mask;
+        this.value |= mask;
     }
-
 
     /**
      * Turns the flag off.

@@ -4,6 +4,7 @@ import cpu.instructions.datatransfer.*;
 import cpu.instructions.machinecontrol.HLT;
 import cpu.instructions.machinecontrol.NOP;
 import cpu.instructions.machinecontrol.POP;
+import cpu.instructions.machinecontrol.PUSH;
 import cpu.registers.Register;
 import cpu.registers.RegisterPair;
 
@@ -148,12 +149,20 @@ public class OperationMap {
 
         addCommand(0xC1, "POP B", POP.popDataToRegisterPair(RegisterPair.BC));
 
+        addCommand(0xC5, "PUSH B", PUSH.pushDataToStack(RegisterPair.BC));
+
         addCommand(0xD1, "POP D", POP.popDataToRegisterPair(RegisterPair.DE));
 
-        addCommand(0xE1, "POP B", POP.popDataToRegisterPair(RegisterPair.HL));
+        addCommand(0xD5, "PUSH D", PUSH.pushDataToStack(RegisterPair.DE));
+
+        addCommand(0xE1, "POP H", POP.popDataToRegisterPair(RegisterPair.HL));
+
+        addCommand(0xE5, "PUSH H", PUSH.pushDataToStack(RegisterPair.HL));
 
         addCommand(0xEB, "XCHG", XCHG.exchangeData());
 
         addCommand(0xF1, "POP PSW", POP.popDataToFlags());
+
+        addCommand(0xE5, "PUSH PSW", PUSH.pushDataAndFlagsToStack());
     }
 }

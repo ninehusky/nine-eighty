@@ -2,6 +2,7 @@ package cpu.instructions.machinecontrol;
 
 import cpu.flags.Flag;
 import cpu.flags.Flags;
+import cpu.registers.Register;
 import cpu.registers.RegisterPair;
 import cpu.registers.Registers;
 import mmu.MemoryBus;
@@ -22,8 +23,8 @@ class POPTest {
 
         regs.getStackPointer().write(0xABD1);
 
-        bus.write(0xABD1, 0xB0);
-        bus.write(0xABD2, 0xBA);
+        bus.write(0xABD2, 0xB0);
+        bus.write(0xABD1, 0xBA);
 
         for (RegisterPair pair : RegisterPair.values()) {
             int before = regs.getProgramCounter().read();
@@ -48,18 +49,19 @@ class POPTest {
 
         regs.getStackPointer().write(0xABD1);
 
-        bus.write(0xABD1, 0xB0);
-        bus.write(0xABD2, 0xFF);
+        bus.write(0xABD2, 0xB0);
+        bus.write(0xABD1, 0xFF);
 
         int before = regs.getProgramCounter().read();
         assertEquals(3, POP.popDataToFlags().execute(regs, f, bus));
         int after = regs.getProgramCounter().read();
 
-        assertEquals(after - before, 1);
+        assertEquals(1, after - before);
+        assertEquals(0xB0, regs.read(Register.A));
 
         assertEquals(0xABD3, regs.getStackPointer().read());
 
-        assertEquals(0xB0, bus.read(0xABD1));
+        assertEquals(0xB0, bus.read(0xABD2));
 
         for (Flag flag : Flag.values()) {
             assertEquals(true, f.isSet(flag));

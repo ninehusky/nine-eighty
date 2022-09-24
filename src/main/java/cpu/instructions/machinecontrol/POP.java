@@ -16,8 +16,8 @@ public class POP {
     public static Instruction popDataToRegisterPair(RegisterPair pair) {
         return (regs, f, bus) -> {
             int address = regs.getStackPointer().read();
-            int highBits = bus.read(address);
-            int lowBits = bus.read(address + 1);
+            int lowBits = bus.read(address);
+            int highBits = bus.read(address + 1);
             int value = (highBits << 8) | lowBits;
 
             regs.writePair(pair, value);
@@ -30,12 +30,12 @@ public class POP {
     public static Instruction popDataToFlags() {
         return (regs, f, bus) -> {
             int address = regs.getStackPointer().read();
-            int highBits = bus.read(address);
             int lowBits = bus.read(address + 1);
+            int highBits = bus.read(address);
 
-            regs.write(Register.A, highBits);
+            regs.write(Register.A, lowBits);
 
-            f.setWithMask(lowBits);
+            f.setWithMask(highBits);
 
             regs.incrementProgramCounter();
             regs.getStackPointer().write(address + 2);
