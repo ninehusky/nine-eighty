@@ -1,10 +1,7 @@
 package cpu.instructions;
 
 import cpu.instructions.datatransfer.*;
-import cpu.instructions.machinecontrol.HLT;
-import cpu.instructions.machinecontrol.NOP;
-import cpu.instructions.machinecontrol.POP;
-import cpu.instructions.machinecontrol.PUSH;
+import cpu.instructions.machinecontrol.*;
 import cpu.registers.Register;
 import cpu.registers.RegisterPair;
 
@@ -162,7 +159,9 @@ public class OperationMap {
         addCommand(0xEB, "XCHG", XCHG.exchangeData());
 
         addCommand(0xF1, "POP PSW", POP.popDataToFlags());
+        addCommand(0xF3, "DI", DI.disableInterrupts());
 
         addCommand(0xF5, "PUSH PSW", PUSH.pushDataAndFlagsToStack());
+        addCommand(0xF8, "EI", EI.enableInterrupts());
     }
 }
