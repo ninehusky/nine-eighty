@@ -163,6 +163,6 @@ public class OperationMap {
 
         addCommand(0xF1, "POP PSW", POP.popDataToFlags());
 
-        addCommand(0xE5, "PUSH PSW", PUSH.pushDataAndFlagsToStack());
+        addCommand(0xF5, "PUSH PSW", PUSH.pushDataAndFlagsToStack());
     }
 }

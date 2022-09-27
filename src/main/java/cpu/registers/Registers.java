@@ -18,6 +18,8 @@ public class Registers {
 
     private CPUState state;
 
+    private boolean interruptsEnabled;
+
     private final Pointer sp;
     private final Pointer pc;
 
@@ -165,5 +167,13 @@ public class Registers {
             case H -> h = val;
             default -> l = val;
         }
+    }
+
+    public void setInterruptsEnabled(boolean interruptsEnabled) {
+        this.interruptsEnabled = interruptsEnabled;
+    }
+
+    public boolean isInterruptsEnabled() {
+        return interruptsEnabled;
     }
 }

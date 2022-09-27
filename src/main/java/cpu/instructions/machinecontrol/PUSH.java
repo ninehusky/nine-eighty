@@ -5,6 +5,10 @@ import cpu.instructions.Instruction;
 import cpu.registers.Register;
 import cpu.registers.RegisterPair;
 
+/**
+ * PUSH - The contents of the specified register pair are saved in two bytes of memory indicated by the stack
+ * pointer SP.
+ */
 public class PUSH {
     public static Instruction pushDataToStack(RegisterPair pair) {
         return (regs, f, bus) -> {
